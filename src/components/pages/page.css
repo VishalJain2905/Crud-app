@@ -1,0 +1,27 @@
+.container{
+    background-color: #a5c2c2 !important;
+}
+
+.heading{
+    margin-bottom: 20px !important;
+    border: 1px solid black;
+    color: #0c274b;
+    background-color: #ddeaea;
+    padding: 10px;
+}
+.thead{
+   margin: auto !important;
+}
+tr{
+    margin: auto !important;
+}
+.inner-container{
+    padding: 50px;
+}
+.pagination{
+    display: flex;
+    justify-content: center;
+    margin-top: 40px;
+}
+
+
