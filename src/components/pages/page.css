@@ -1,13 +1,14 @@
 .container{
-    background-color: #a5c2c2 !important;
+    background-color: #08365f !important;
 }
 
 .heading{
     margin-bottom: 20px !important;
-    border: 1px solid black;
-    color: #0c274b;
-    background-color: #ddeaea;
-    padding: 10px;
+    /* border: 1px solid black; */
+    text-shadow: 3px 3px black;
+    color: #eee;
+    /* background-color: #ddeaea;
+    padding: 10px; */
 }
 .thead{
    margin: auto !important;

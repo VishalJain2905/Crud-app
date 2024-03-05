@@ -2,8 +2,12 @@ import React, { useState } from "react";
 import './user.css';
 import axios from "axios";
 import { useNavigate } from "react-router-dom"; 
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Adduser = () => {
+
+   const notify = () => toast("User Added Successfully!");
 
     const navigate = useNavigate();
     const [user, setUser] = useState({
@@ -23,8 +27,9 @@ const Adduser = () => {
     const onSubmit = async e => {
         e.preventDefault()
         await axios.post("http://localhost:3003/users", user);
-        alert("You added data successfully!"); // Display alert message after updating data
-        navigate("/home");
+        // toast.success("User added successfully"); 
+        // alert("You added data successfully!"); // Display alert message after updating data
+        setTimeout(() => navigate("/home"), 2500);
     }
   return (
     <>
@@ -91,7 +96,10 @@ const Adduser = () => {
           onChange={e => onInputChange(e)}
         />
       </div>
-     <button className="btn btn-primary">Add User</button>
+      <div>
+     <button className="btn btn-primary" onClick={notify}>Add User</button>
+     <ToastContainer />
+     </div>
      </form>
       </div>
     </>

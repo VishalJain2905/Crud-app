@@ -2,8 +2,11 @@ import React, { useState, useEffect } from "react";
 import './user.css'
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom"; 
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Edituser = () => {
+    const notify = () => toast("User Updated Successfully!");
     const navigate = useNavigate();
     const { id } = useParams();
     const [user, setUser] = useState({
@@ -27,8 +30,8 @@ const Edituser = () => {
     const onSubmit = async e => {
         e.preventDefault();
         await axios.put(`http://localhost:3003/users/${id}`, user);
-        alert("You updated data successfully!"); // Display alert message after updating data
-        navigate("/home");
+        // alert("You updated data successfully!"); // Display alert message after updating data
+        setTimeout(() => navigate("/home"), 3000);
     };
 
     const loadUser = async () => {
@@ -106,7 +109,8 @@ const Edituser = () => {
                         />
                     </div>
                    <div className="edit-buttons">
-                    <button className="btn btn-warning m-2">Update User</button>
+                    <button className="btn btn-warning m-2" onClick={notify}>Update User</button>
+                    <ToastContainer />
                     <button type="button" className="btn btn-secondary" onClick={onClose}>Close</button>
                     </div>
                 </form>

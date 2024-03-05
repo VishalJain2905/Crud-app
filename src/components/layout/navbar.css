@@ -1,3 +1,6 @@
 .navbar{
-    background-color: #e4eaef !important;
+    background-color: #08365f !important;
+}
+.navbar a{
+    color: #fff !important;
 }

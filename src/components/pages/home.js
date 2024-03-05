@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
-import './page.css';
+import "./page.css";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Home = () => {
   const [users, setUsers] = useState([]);
@@ -9,9 +11,10 @@ const Home = () => {
   const recordsPerPage = 2;
   const lastIndex = currentPage * recordsPerPage;
   const firstIndex = lastIndex - recordsPerPage;
-  const records = users.slice(firstIndex, lastIndex); // Corrected 'data' to 'users'
-  const npage = Math.ceil(users.length / recordsPerPage); // Corrected 'data' to 'users'
+  const records = users.slice(firstIndex, lastIndex); 
+  const npage = Math.ceil(users.length / recordsPerPage); 
   const numbers = [...Array(npage + 1).keys()].slice(1);
+  const notify = () => toast("User deleted Successfully!");
 
   useEffect(() => {
     loadUsers();
@@ -23,13 +26,8 @@ const Home = () => {
   };
 
   const deleteUser = async (id) => {
-    const confirmed = window.confirm("Are you sure you want to delete this user?");
-    if (confirmed) {
       await axios.delete(`http://localhost:3003/users/${id}`);
       loadUsers();
-    } else {
-      console.log("User deletion cancelled.");
-    }
   };
 
   const prePage = () => {
@@ -53,7 +51,7 @@ const Home = () => {
       <div className="inner-container">
         <h1 className="heading">Homepage</h1>
         <table className="table border shadow">
-          <thead className="thead table-info">
+          <thead className="thead-dark">
             <tr>
               {/* <th scope="col">#</th> */}
               <th scope="col">Name</th>
@@ -63,7 +61,7 @@ const Home = () => {
               <th>Actions</th>
             </tr>
           </thead>
-          <tbody className="table-success">
+          <tbody className="table">
             {records.length > 0 ? (
               records.map((user, index) => (
                 <tr key={user.id}>
@@ -73,9 +71,27 @@ const Home = () => {
                   <td>{user.email}</td>
                   <td>{user.website}</td>
                   <td>
-                    <Link className="btn btn-primary m-2" to={`/Users/user/${user.id}`}>View</Link>
-                    <Link className="btn btn-outline-warning m-2" to={`/Users/edit/${user.id}`}>Edit</Link>
-                    <button className="btn btn-outline-danger m-2" onClick={() => deleteUser(user.id)}>Delete</button>
+                    <Link
+                      className="btn btn-primary m-2"
+                      to={`/Users/user/${user.id}`}
+                    >
+                      View
+                    </Link>
+                    <Link
+                      className="btn btn-outline-warning m-2"
+                      to={`/Users/edit/${user.id}`}
+                    >
+                      Edit
+                    </Link>
+                    <button
+                      className="btn btn-outline-danger m-2"
+                      onClick={() => {
+                        deleteUser(user.id);
+                        notify();
+                      }}
+                    >
+                      Delete
+                    </button>
                   </td>
                 </tr>
               ))
@@ -88,18 +104,32 @@ const Home = () => {
             )}
           </tbody>
         </table>
+        <ToastContainer /> {/* Moved ToastContainer outside the loop */}
         <nav>
-          <ul className='pagination'>
-            <li className='page-item'>
-              <a href="#" className='page-link' onClick={prePage}>Prev</a>
+          <ul className="pagination">
+            <li className="page-item">
+              <a href="#" className="page-link" onClick={prePage}>
+                Prev
+              </a>
             </li>
             {numbers.map((n, index) => (
-              <li className={`page-item ${currentPage === n ? 'active' : ''}`} key={index}>
-                <a href="#" className='page-link' onClick={() => changeCurrentPage(n)}>{n}</a>
+              <li
+                className={`page-item ${currentPage === n ? "active" : ""}`}
+                key={index}
+              >
+                <a
+                  href="#"
+                  className="page-link"
+                  onClick={() => changeCurrentPage(n)}
+                >
+                  {n}
+                </a>
               </li>
             ))}
-            <li className='page-item'>
-              <a href="#" className='page-link' onClick={nextPage}>Next</a>
+            <li className="page-item">
+              <a href="#" className="page-link" onClick={nextPage}>
+                Next
+              </a>
             </li>
           </ul>
         </nav>
